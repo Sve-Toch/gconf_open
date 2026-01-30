@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Как научить ребёнка собирать пазлы — Валентина Паевская</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --coral: #FF6B6B;
+            --yellow: #FFE66D;
+            --mint: #4ECDC4;
+            --purple: #9B5DE5;
+            --blue: #00BBF9;
+            --dark: #1a1a2e;
+            --light: #fafafa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.45;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* Animated Background Shapes */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: var(--dark);
+            overflow: hidden;
+        }
+
+        .hero .shape-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--purple);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .hero .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--coral);
+            bottom: -50px;
+            left: -100px;
+            animation-delay: 2s;
+        }
+
+        .hero .shape-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--mint);
+            top: 50%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text {
+            color: white;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--mint);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--coral) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-quote {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 500px;
+            margin-bottom: 32px;
+        }
+
+        .hero-author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .author-avatar {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--mint) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info {
+            color: white;
+        }
+
+        .author-info strong {
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .author-info span {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Puzzle Graphic */
+        .hero-graphic {
+            position: relative;
+            height: 500px;
+        }
+
+        .puzzle-piece {
+            position: absolute;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .puzzle-piece:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .puzzle-piece svg {
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+        }
+
+        .puzzle-1 { top: 0; left: 50px; animation: float 6s ease-in-out infinite; }
+        .puzzle-2 { top: 100px; right: 20px; animation: float 7s ease-in-out infinite 1s; }
+        .puzzle-3 { bottom: 100px; left: 20px; animation: float 8s ease-in-out infinite 2s; }
+        .puzzle-4 { bottom: 50px; right: 80px; animation: float 6s ease-in-out infinite 0.5s; }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: white;
+            padding: 40px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item {
+            position: relative;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--mint) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+
+        /* Principles Section */
+        .principles {
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--mint) 0%, var(--yellow) 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .principle-card {
+            background: white;
+            border-radius: 24px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #f0f0f0;
+            transition: all 0.4s ease;
+        }
+
+        .principle-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(155, 93, 229, 0.15);
+        }
+
+        .principle-number {
+            font-size: 8rem;
+            font-weight: 700;
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            opacity: 0.05;
+            line-height: 1;
+        }
+
+        .principle-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .principle-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .principle-card:nth-child(1) .principle-icon { background: linear-gradient(135deg, var(--mint) 0%, var(--yellow) 100%); }
+        .principle-card:nth-child(2) .principle-icon { background: linear-gradient(135deg, var(--yellow) 0%, var(--coral) 100%); }
+        .principle-card:nth-child(3) .principle-icon { background: linear-gradient(135deg, var(--coral) 0%, var(--purple) 100%); }
+        .principle-card:nth-child(3) .principle-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .principle-card:nth-child(4) .principle-icon { background: linear-gradient(135deg, var(--purple) 0%, var(--mint) 100%); }
+
+        .principle-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .principle-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* ========== INTERACTIVE STAGES SECTION ========== */
+        .stages {
+            padding: 60px 0;
+            background: linear-gradient(180deg, var(--dark) 0%, #252547 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stages::before {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--purple) 0%, transparent 60%);
+            top: -300px;
+            right: -300px;
+            opacity: 0.2;
+        }
+
+        .stages .section-title {
+            color: white;
+        }
+
+        .stages .section-header {
+            margin-bottom: 24px;
+        }
+
+        /* Stage Navigation */
+        .stages-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .stage-nav-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .stage-nav-btn {
+            width: 96px;
+            height: 96px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.06) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            z-index: 2;
+            padding: 12px 8px;
+            box-sizing: border-box;
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='white' d='M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='white' d='M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5'/%3E%3C/svg%3E");
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+        }
+
+        .stage-nav-btn::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.3) 100%);
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='white' d='M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='white' d='M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5'/%3E%3C/svg%3E");
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            z-index: -1;
+        }
+
+        .stage-nav-btn:hover {
+            transform: scale(1.08);
+            background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.1) 100%);
+        }
+
+        .stage-nav-btn:hover::before {
+            background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.45) 100%);
+        }
+
+        .stage-nav-item[data-stage="1"] .stage-nav-btn.active { background: linear-gradient(135deg, rgba(78, 205, 196, 0.4) 0%, rgba(255, 230, 109, 0.25) 100%); }
+        .stage-nav-item[data-stage="2"] .stage-nav-btn.active { background: linear-gradient(135deg, rgba(255, 230, 109, 0.4) 0%, rgba(255, 107, 107, 0.25) 100%); }
+        .stage-nav-item[data-stage="3"] .stage-nav-btn.active { background: linear-gradient(135deg, rgba(255, 107, 107, 0.4) 0%, rgba(155, 93, 229, 0.25) 100%); }
+        .stage-nav-item[data-stage="4"] .stage-nav-btn.active { background: linear-gradient(135deg, rgba(155, 93, 229, 0.4) 0%, rgba(78, 205, 196, 0.25) 100%); }
+
+        .stage-nav-item[data-stage="1"] .stage-nav-btn.active::before { background: linear-gradient(135deg, var(--mint) 0%, var(--yellow) 100%); }
+        .stage-nav-item[data-stage="2"] .stage-nav-btn.active::before { background: linear-gradient(135deg, var(--yellow) 0%, var(--coral) 100%); }
+        .stage-nav-item[data-stage="3"] .stage-nav-btn.active::before { background: linear-gradient(135deg, var(--coral) 0%, var(--purple) 100%); }
+        .stage-nav-item[data-stage="4"] .stage-nav-btn.active::before { background: linear-gradient(135deg, var(--purple) 0%, var(--mint) 100%); }
+
+        .stage-nav-btn .num {
+            position: relative;
+            z-index: 1;
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--mint) 0%, var(--yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            flex-shrink: 0;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+        }
+
+        .stage-nav-item[data-stage="2"] .stage-nav-btn .num { background: linear-gradient(135deg, var(--yellow) 0%, var(--coral) 100%); -webkit-background-clip: text; background-clip: text; }
+        .stage-nav-item[data-stage="3"] .stage-nav-btn .num { background: linear-gradient(135deg, var(--coral) 0%, var(--purple) 100%); -webkit-background-clip: text; background-clip: text; }
+        .stage-nav-item[data-stage="4"] .stage-nav-btn .num { background: linear-gradient(135deg, var(--purple) 0%, var(--mint) 100%); -webkit-background-clip: text; background-clip: text; }
+
+        .stage-nav-btn .label {
+            position: relative;
+            z-index: 1;
+            font-size: 0.52rem;
+            line-height: 1.15;
+            color: rgba(255,255,255,0.95);
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            text-align: center;
+            max-width: 100%;
+            word-break: break-word;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .stage-nav-btn.active .label {
+            color: rgba(255,255,255,0.98);
+        }
+
+        /* Arrow between stages */
+        .stage-arrow {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%);
+            position: relative;
+            margin: 0 -10px;
+            z-index: 1;
+        }
+
+        .stage-arrow::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left: 12px solid rgba(255,255,255,0.3);
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+
+        /* Animated progress on arrow */
+        .stage-arrow::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--mint) 0%, var(--yellow) 100%);
+            transition: width 0.5s ease;
+        }
+
+        .stage-nav-item.completed .stage-arrow::before {
+            width: 100%;
+        }
+
+        .stage-nav-item.completed .stage-nav-btn {
+            background: linear-gradient(135deg, rgba(155, 93, 229, 0.35) 0%, rgba(78, 205, 196, 0.2) 100%);
+        }
+
+        .stage-nav-item.completed .stage-nav-btn::before {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--mint) 100%);
+        }
+
+        .stage-nav-item.completed .stage-nav-btn .num {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--mint) 100%);
+            -webkit-background-clip: text;
+        }
+
+        /* Stage Content Cards */
+        .stage-content-wrapper {
+            position: relative;
+            min-height: 420px;
+        }
+
+        .stage-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .stage-content.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+            position: relative;
+        }
+
+        .stage-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+
+        .stage-header {
+            padding: 28px 32px;
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stage-icon-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .stage-content:nth-child(1) .stage-icon-large { background: linear-gradient(135deg, var(--mint) 0%, var(--yellow) 100%); }
+        .stage-content:nth-child(2) .stage-icon-large { background: linear-gradient(135deg, var(--yellow) 0%, var(--coral) 100%); }
+        .stage-content:nth-child(3) .stage-icon-large { background: linear-gradient(135deg, var(--coral) 0%, var(--purple) 100%); }
+        .stage-content:nth-child(4) .stage-icon-large { background: linear-gradient(135deg, var(--purple) 0%, var(--mint) 100%); }
+
+        .stage-info h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 6px;
+        }
+
+        .stage-info .subtitle {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 10px;
+        }
+
+        .stage-info .description {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.95rem;
+            line-height: 1.45;
+            max-width: 600px;
+        }
+
+        /* Details Grid */
+        .stage-details {
+            padding: 20px 32px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .detail-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .detail-card:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-4px);
+        }
+
+        .detail-card h4 {
+            color: var(--yellow);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-card h4::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--yellow);
+        }
+
+        .detail-card ul {
+            list-style: none;
+        }
+
+        .detail-card li {
+            color: rgba(255,255,255,0.7);
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 0.85rem;
+        }
+
+        .detail-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--mint);
+        }
+
+        /* Navigation Arrows */
+        .stage-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 100px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(4px);
+        }
+
+        .nav-btn.prev:hover {
+            transform: translateX(-4px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-btn:disabled:hover {
+            transform: none;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--coral) 100%);
+            color: var(--dark);
+        }
+
+        .nav-btn.next:hover {
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Puzzle Firework Effect */
+        .nav-btn.complete {
+            background: linear-gradient(135deg, var(--mint) 0%, var(--yellow) 100%);
+            position: relative;
+            overflow: visible;
+        }
+
+        .nav-btn.complete:hover {
+            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.4);
+        }
+
+        .firework-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .puzzle-firework {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            opacity: 0;
+            animation: puzzleExplode 1.5s ease-out forwards;
+        }
+
+        .puzzle-firework svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+
+        @keyframes puzzleExplode {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) rotate(0deg) scale(0.5);
+            }
+            20% {
+                opacity: 1;
+                transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(var(--tx) * 2.5), calc(var(--ty) * 2.5 + 100px)) rotate(calc(var(--rot) * 3)) scale(0.3);
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            animation: confettiFall 1.8s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), calc(var(--ty) + 300px)) rotate(720deg) scale(0.5);
+            }
+        }
+
+        /* Success overlay */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .success-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-message {
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .success-overlay.active .success-message {
+            transform: scale(1);
+        }
+
+        .success-emoji {
+            font-size: 6rem;
+            margin-bottom: 20px;
+            animation: bounce 0.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-15px); }
+        }
+
+        .success-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .success-subtext {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 30px;
+        }
+
+        .success-close {
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--coral) 100%);
+            border: none;
+            padding: 16px 40px;
+            border-radius: 100px;
+            color: var(--dark);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: transform 0.3s ease;
+        }
+
+        .success-close:hover {
+            transform: scale(1.05);
+        }
+
+        .stage-counter {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        .stage-counter span {
+            color: var(--yellow);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+            background: white;
+        }
+
+        .quote-bg {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25rem;
+            font-weight: 700;
+            color: #f5f5f5;
+            z-index: 0;
+            user-select: none;
+        }
+
+        .quote-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .quote-mark {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--coral) 0%, var(--purple) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .quote-mark svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .big-quote {
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--dark);
+        }
+
+        .big-quote span {
+            color: var(--purple);
+        }
+
+        /* Rules Section */
+        .rules {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--purple) 0%, var(--mint) 100%);
+            position: relative;
+        }
+
+        .rules .section-title {
+            color: white;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .rule-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .rule-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-4px);
+        }
+
+        .rule-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+        
+        .rule-icon svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        .rule-content h3 {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .rule-content p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Ages Slider Section */
+        .ages {
+            padding: 60px 0 80px;
+            background: linear-gradient(180deg, #f8f9fa 0%, white 100%);
+        }
+
+        .ages-slider-container {
+            max-width: 700px;
+            margin: 30px auto 0;
+        }
+
+        .age-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding: 0 10px;
+        }
+
+        .age-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .age-label:hover {
+            color: var(--dark);
+        }
+
+        .age-label.active {
+            color: white;
+        }
+
+        .age-label[data-age="0"].active { background: var(--mint); }
+        .age-label[data-age="1"].active { background: var(--yellow); }
+        .age-label[data-age="2"].active { background: var(--coral); }
+        .age-label[data-age="3"].active { background: var(--purple); }
+
+        .age-slider-track {
+            position: relative;
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 6px;
+            margin: 20px 0 50px;
+            cursor: pointer;
+        }
+
+        .age-slider-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--mint) 0%, var(--yellow) 25%, var(--coral) 50%, var(--purple) 75%, var(--mint) 100%);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .age-slider-markers {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            padding: 0 10px;
+        }
+
+        .age-marker {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            border: 3px solid #ccc;
+            z-index: 5;
+        }
+
+        .age-marker[data-age="0"] { border-color: var(--mint); }
+        .age-marker[data-age="1"] { border-color: var(--yellow); }
+        .age-marker[data-age="2"] { border-color: var(--coral); }
+        .age-marker[data-age="3"] { border-color: var(--purple); }
+
+        .age-marker.active {
+            transform: scale(1.4);
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
+
+        .age-marker:hover {
+            transform: scale(1.2);
+        }
+
+        .age-slider-thumb {
+            --thumb-color: var(--mint);
+            --thumb-color-end: var(--yellow);
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translate(-50%, -50%);
+            width: 56px;
+            height: 56px;
+            background: transparent;
+            cursor: grab;
+            transition: left 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            user-select: none;
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='white' d='M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='white' d='M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5'/%3E%3C/svg%3E");
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.25));
+        }
+
+        .age-slider-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--thumb-color) 0%, var(--thumb-color-end) 100%);
+            z-index: 0;
+        }
+
+        .age-slider-thumb::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(135deg, var(--thumb-color) 0%, var(--thumb-color-end) 100%);
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='white' d='M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='white' d='M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5'/%3E%3C/svg%3E");
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            z-index: -1;
+        }
+
+        .age-slider-thumb.dragging {
+            cursor: grabbing;
+            transform: translate(-50%, -50%) scale(1.15);
+            transition: transform 0.1s ease;
+        }
+
+        .age-content-wrapper {
+            position: relative;
+            min-height: 280px;
+        }
+
+        .age-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+        }
+
+        .age-content.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .age-card {
+            background: white;
+            border-radius: 32px;
+            padding: 48px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 2px solid #f0f0f0;
+        }
+
+        .age-card-badge {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .age-card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .age-card p {
+            color: #666;
+            font-size: 1.15rem;
+            line-height: 1.5;
+            max-width: 500px;
+            margin: 0 auto 24px;
+        }
+
+        .age-card-tips {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .age-card-tips span {
+            background: #f5f5f5;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .age-content[data-age="0"] .age-card { border-color: rgba(78, 205, 196, 0.3); }
+        .age-content[data-age="1"] .age-card { border-color: rgba(255, 230, 109, 0.3); }
+        .age-content[data-age="2"] .age-card { border-color: rgba(255, 107, 107, 0.3); }
+        .age-content[data-age="3"] .age-card { border-color: rgba(155, 93, 229, 0.3); }
+
+        /* CTA Section */
+        .cta {
+            padding: 60px 0;
+            background: var(--dark);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--purple) 0%, transparent 60%);
+            top: -400px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--coral) 100%);
+            color: var(--dark);
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 20px 40px;
+            border-radius: 100px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.4);
+        }
+
+        .cta-button svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f0f1a;
+            padding: 40px 0;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+        }
+
+        footer a {
+            color: var(--coral);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-graphic {
+                display: none;
+            }
+
+            .hero-author {
+                justify-content: center;
+            }
+
+            .hero-quote {
+                margin: 0 auto 32px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stages-nav {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .stage-arrow {
+                display: none;
+            }
+
+            .stage-nav-btn {
+                width: 88px;
+                height: 88px;
+                padding: 10px 6px;
+            }
+
+            .stage-nav-btn .num {
+                font-size: 1.3rem;
+            }
+
+            .stage-nav-btn .label {
+                font-size: 0.48rem;
+            }
+
+            .stage-header {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+
+            .stage-info .description {
+                text-align: center;
+            }
+
+            .rules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ages-timeline {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .ages-timeline::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 0;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.85rem;
+            }
+
+            .big-quote {
+                font-size: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .stage-header {
+                padding: 32px;
+            }
+
+            .stage-details {
+                padding: 32px;
+            }
+
+            .stage-navigation {
+                padding: 24px 32px;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .stage-info h3 {
+                font-size: 1.8rem;
+            }
+
+            .cta h2 {
+                font-size: 1.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">Нейропсихология для родителей</div>
+                    <h1>Как научить ребёнка собирать <span>пазлы</span></h1>
+                    <p class="hero-quote">Вопрос не в том, чтобы заставить. Вопрос — показать, что он умеет и сможет. Каждый возьмёт в своём возрасте.</p>
+                    
+                    <div class="hero-author">
+                        <div class="author-avatar">
+                            <img src="https://static.tildacdn.com/tild6438-3035-4361-a561-363239363962/_.png" alt="Валентина Паевская">
+                        </div>
+                        <div class="author-info">
+                            <strong>Валентина Паевская</strong>
+                            <span>детский нейропсихолог</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-graphic">
+                    <div class="puzzle-piece puzzle-1">
+                        <svg width="180" height="180" viewBox="0 0 100 100">
+                            <path d="M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5" fill="url(#grad1)"/>
+                            <defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FF6B6B"/><stop offset="100%" style="stop-color:#FFE66D"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <div class="puzzle-piece puzzle-2">
+                        <svg width="150" height="150" viewBox="0 0 100 100">
+                            <path d="M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5" fill="url(#grad2)"/>
+                            <defs><linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#9B5DE5"/><stop offset="100%" style="stop-color:#F15BB5"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <div class="puzzle-piece puzzle-3">
+                        <svg width="140" height="140" viewBox="0 0 100 100">
+                            <path d="M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5" fill="url(#grad3)"/>
+                            <defs><linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#4ECDC4"/><stop offset="100%" style="stop-color:#00BBF9"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <div class="puzzle-piece puzzle-4">
+                        <svg width="120" height="120" viewBox="0 0 100 100">
+                            <path d="M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5" fill="url(#grad4)"/>
+                            <defs><linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FFE66D"/><stop offset="100%" style="stop-color:#4ECDC4"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">этапа обучения</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2-3</div>
+                    <div class="stat-label">минуты в день</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1.5+</div>
+                    <div class="stat-label">возраст начала</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">37</div>
+                    <div class="stat-label">минут видео</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principles Section -->
+    <section class="principles">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Четыре принципа успеха</h2>
+            </div>
+            
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="principle-number">01</div>
+                    <div class="principle-icon">
+                        <img src="images/happy-toddler.png" alt="Радостный малыш">
+                    </div>
+                    <h3>Хорошее настроение</h3>
+                    <p>Никогда не заниматься с ребёнком в плохом настроении — ни вашем, ни его. Это основа всего процесса.</p>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-number">02</div>
+                    <div class="principle-icon">
+                        <img src="images/sunrise.png" alt="Рассвет">
+                    </div>
+                    <h3>Утренние занятия</h3>
+                    <p>Время занятий всегда планируйте на первую половину дня, когда ребёнок максимально активен.</p>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-number">03</div>
+                    <div class="principle-icon">
+                        <img src="images/zone-development.png" alt="Зона развития">
+                    </div>
+                    <h3>Зона развития</h3>
+                    <p>Сначала делаем вместе с мамой, потом ребёнок повторяет и делает самостоятельно.</p>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-number">04</div>
+                    <div class="principle-icon">
+                        <img src="images/simple-to-complex.png" alt="От простого к сложному">
+                    </div>
+                    <h3>От простого к сложному</h3>
+                    <p>Даже если кажется слишком банальным — начинайте с самого простого. Всегда.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Stages Section -->
+    <section class="stages">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Этапы обучения</h2>
+            </div>
+
+            <!-- Stage Navigation -->
+            <div class="stages-nav">
+                <div class="stage-nav-item" data-stage="1">
+                    <div class="stage-nav-btn active">
+                        <span class="num">01</span>
+                        <span class="label">Половинки</span>
+                    </div>
+                    <div class="stage-arrow"></div>
+                </div>
+                <div class="stage-nav-item" data-stage="2">
+                    <div class="stage-nav-btn">
+                        <span class="num">02</span>
+                        <span class="label">Тематические</span>
+                    </div>
+                    <div class="stage-arrow"></div>
+                </div>
+                <div class="stage-nav-item" data-stage="3">
+                    <div class="stage-nav-btn">
+                        <span class="num">03</span>
+                        <span class="label">15 деталей</span>
+                    </div>
+                    <div class="stage-arrow"></div>
+                </div>
+                <div class="stage-nav-item" data-stage="4">
+                    <div class="stage-nav-btn">
+                        <span class="num">04</span>
+                        <span class="label">По смыслу</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage Content -->
+            <div class="stage-content-wrapper">
+                <!-- Stage 1 -->
+                <div class="stage-content active" data-stage="1">
+                    <div class="stage-card">
+                        <div class="stage-header">
+                            <div class="stage-icon-large">1</div>
+                            <div class="stage-info">
+                                <h3>Этап 1: Половинки</h3>
+                                <p class="subtitle">Самые простые картинки из 2 частей</p>
+                                <p class="description">Начинаем с базы — учим ребёнка соединять две части одной картинки. Показываем движение сведения, минимум слов. Ребёнку нужно сосредоточить зрительное внимание.</p>
+                            </div>
+                        </div>
+                        <div class="stage-details">
+                            <div class="detail-card">
+                                <h4>Работа с половинками</h4>
+                                <ul>
+                                    <li>Не более 3 картинок за раз</li>
+                                    <li>Демонстрировать, не требовать</li>
+                                    <li>Показать движение сведения</li>
+                                    <li>Постепенно увеличивать до 5 картинок</li>
+                                </ul>
+                            </div>
+                            <div class="detail-card">
+                                <h4>Добавление поворотов</h4>
+                                <ul>
+                                    <li>Класть картинки неровно</li>
+                                    <li>Показать «повернул» несколько раз</li>
+                                    <li>Снова начинать с 2-3 картинок</li>
+                                    <li>Терпеливо ждать освоения</li>
+                                </ul>
+                            </div>
+                            <div class="detail-card">
+                                <h4>Рекомендуемые материалы</h4>
+                                <ul>
+                                    <li>ELC — качественные половинки</li>
+                                    <li>Прочные, не гнутся</li>
+                                    <li>Яркие картинки</li>
+                                    <li>Простые для сведения</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="stage-navigation">
+                            <button class="nav-btn prev" disabled>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                                Назад
+                            </button>
+                            <div class="stage-counter">Этап <span>1</span> из 4</div>
+                            <button class="nav-btn next" onclick="goToStage(2)">
+                                Далее
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage 2 -->
+                <div class="stage-content" data-stage="2">
+                    <div class="stage-card">
+                        <div class="stage-header">
+                            <div class="stage-icon-large">2</div>
+                            <div class="stage-info">
+                                <h3>Этап 2: Тематические пазлы</h3>
+                                <p class="subtitle">«Кто что ест», «Кто где живёт»</p>
+                                <p class="description">Переходим к пазлам с первым сцеплением и смысловой связью. Ребёнок учится не только соединять детали, но и понимать логику картинки.</p>
+                            </div>
+                        </div>
+                        <div class="stage-details">
+                            <div class="detail-card">
+                                <h4>Способы помощи</h4>
+                                <ul>
+                                    <li>Полный контроль руки (за запястье)</li>
+                                    <li>Частичный — держать за ручку</li>
+                                    <li>Лёгкое касание пальцем</li>
+                                    <li>Действие — всегда ребёнок</li>
+                                </ul>
+                            </div>
+                            <div class="detail-card">
+                                <h4>Особенности этапа</h4>
+                                <ul>
+                                    <li>Первое знакомство со сцеплением</li>
+                                    <li>Учим поворачивать детали</li>
+                                    <li>Смысловая связь картинок</li>
+                                    <li>Развиваем логическое мышление</li>
+                                </ul>
+                            </div>
+                            <div class="detail-card">
+                                <h4>Рекомендуемые материалы</h4>
+                                <ul>
+                                    <li>Djeco — качественные тематические</li>
+                                    <li>Тоньше, чувствительны к воде</li>
+                                    <li>Красивые иллюстрации</li>
+                                    <li>Понятная тематика</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="stage-navigation">
+                            <button class="nav-btn prev" onclick="goToStage(1)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                                Назад
+                            </button>
+                            <div class="stage-counter">Этап <span>2</span> из 4</div>
+                            <button class="nav-btn next" onclick="goToStage(3)">
+                                Далее
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage 3 -->
+                <div class="stage-content" data-stage="3">
+                    <div class="stage-card">
+                        <div class="stage-header">
+                            <div class="stage-icon-large">3</div>
+                            <div class="stage-info">
+                                <h3>Этап 3: Пазлы из 15 деталей</h3>
+                                <p class="subtitle">С опорой на форму без классических сцеплений</p>
+                                <p class="description">Ребёнок начинает ориентироваться по контуру деталей. Это важный навык — большинство детей собирают именно по форме, а не по картинке.</p>
+                            </div>
+                        </div>
+                        <div class="stage-details">
+                            <div class="detail-card">
+                                <h4>Усложнение задачи</h4>
+                                <ul>
+                                    <li>Вытаскивать 2-3 соседних детали</li>
+                                    <li>Постепенно увеличить до 5-6</li>
+                                    <li>Чередовать верх и низ картинки</li>
+                                    <li>Добавлять перевёрнутые элементы</li>
+                                </ul>
+                            </div>
+                            <div class="detail-card">
+                                <h4>Закрепление навыка</h4>
+                                <ul>
+                                    <li>Один и тот же пазл для памяти</li>
+                                    <li>Развиваем уверенность в руках</li>
+                                    <li>8 минут на действие — это нормально</li>
+                                    <li>Чередовать разные активности</li>
+                                </ul>
+                            </div>
+                            <div class="detail-card">
+                                <h4>Важно помнить</h4>
+                                <ul>
+                                    <li>Не вмешиваться, когда пыхтит</li>
+                                    <li>Ребёнок справится сам</li>
+                                    <li>Терпение — ключ к успеху</li>
+                                    <li>Хвалить за старание</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="stage-navigation">
+                            <button class="nav-btn prev" onclick="goToStage(2)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                                Назад
+                            </button>
+                            <div class="stage-counter">Этап <span>3</span> из 4</div>
+                            <button class="nav-btn next" onclick="goToStage(4)">
+                                Далее
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage 4 -->
+                <div class="stage-content" data-stage="4">
+                    <div class="stage-card">
+                        <div class="stage-header">
+                            <div class="stage-icon-large">4</div>
+                            <div class="stage-info">
+                                <h3>Этап 4: Сборка по смыслу</h3>
+                                <p class="subtitle">Без опоры на форму — ориентация по картинке</p>
+                                <p class="description">Финальный этап — ребёнок собирает пазлы, ориентируясь на изображение. Это более сложный навык, который осваивается меньшинством детей естественным путём.</p>
+                            </div>
+                        </div>
+                        <div class="stage-details">
+                            <div class="detail-card">
+                                <h4>Типы восприятия</h4>
+                                <ul>
+                                    <li>По форме — на контур детали</li>
+                                    <li>По смыслу — на изображение</li>
+                                    <li>Большинство детей — по форме</li>
+                                    <li>Учитывайте особенности ребёнка</li>
+                                </ul>
+                            </div>
+                            <div class="detail-card">
+                                <h4>Дополнительно</h4>
+                                <ul>
+                                    <li>Картинки на равные квадраты</li>
+                                    <li>Приложения на iPad с пазлами</li>
+                                    <li>Новые пазлы для интереса</li>
+                                    <li>Разная сложность</li>
+                                </ul>
+                            </div>
+                            <div class="detail-card">
+                                <h4>Результат</h4>
+                                <ul>
+                                    <li>Самостоятельная сборка новых пазлов</li>
+                                    <li>Уверенность в своих силах</li>
+                                    <li>Развитое пространственное мышление</li>
+                                    <li>Готовность к сложным задачам</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="stage-navigation">
+                            <button class="nav-btn prev" onclick="goToStage(3)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                                Назад
+                            </button>
+                            <div class="stage-counter">Этап <span>4</span> из 4</div>
+                            <button class="nav-btn next complete" onclick="triggerPuzzleFirework(event)">
+                                Готово!
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l4 4 10-10"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="quote-section">
+        <div class="quote-bg">„</div>
+        <div class="container">
+            <div class="quote-content">
+                <div class="quote-mark">
+                    <svg viewBox="0 0 24 24"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
+                </div>
+                <p class="big-quote">Минимум слов во время занятия — ребёнку нужно <span>сосредоточить зрительное внимание</span> на том, что происходит, а не слушать объяснения.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules Section -->
+    <section class="rules">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Золотые правила</h2>
+            </div>
+            
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <div class="rule-icon">
+                        <svg viewBox="0 0 100 100">
+                            <path d="M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5" fill="url(#ruleGrad1)"/>
+                            <defs><linearGradient id="ruleGrad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FF6B6B"/><stop offset="100%" style="stop-color:#FFE66D"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <div class="rule-content">
+                        <h3>Ребёнок делает сам</h3>
+                        <p>Основное действие всегда выполняет ребёнок. Родитель только направляет и мягко подсказывает.</p>
+                    </div>
+                </div>
+                
+                <div class="rule-card">
+                    <div class="rule-icon">
+                        <svg viewBox="0 0 100 100">
+                            <path d="M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5" fill="url(#ruleGrad2)"/>
+                            <defs><linearGradient id="ruleGrad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#9B5DE5"/><stop offset="100%" style="stop-color:#F15BB5"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <div class="rule-content">
+                        <h3>Не мешать процессу</h3>
+                        <p>Когда ребёнок пыхтит, но делает сам — не вмешивайтесь. 8 минут на одно действие — нормально.</p>
+                    </div>
+                </div>
+                
+                <div class="rule-card">
+                    <div class="rule-icon">
+                        <svg viewBox="0 0 100 100">
+                            <path d="M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5" fill="url(#ruleGrad3)"/>
+                            <defs><linearGradient id="ruleGrad3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#4ECDC4"/><stop offset="100%" style="stop-color:#00BBF9"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <div class="rule-content">
+                        <h3>Коротко, но регулярно</h3>
+                        <p>Занятие 2-3 минуты в день. Лучше чаще и меньше, чем один раз долго и с усталостью.</p>
+                    </div>
+                </div>
+                
+                <div class="rule-card">
+                    <div class="rule-icon">
+                        <svg viewBox="0 0 100 100">
+                            <path d="M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5" fill="url(#ruleGrad4)"/>
+                            <defs><linearGradient id="ruleGrad4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FFE66D"/><stop offset="100%" style="stop-color:#4ECDC4"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <div class="rule-content">
+                        <h3>Убирать самостоятельно</h3>
+                        <p>Приучайте ребёнка убирать игрушки с раннего возраста. Это важная часть процесса.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ages Section -->
+    <section class="ages">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Возрастные ориентиры</h2>
+            </div>
+            
+            <div class="ages-slider-container">
+                <!-- Age Labels -->
+                <div class="age-labels">
+                    <span class="age-label" data-age="0">1+</span>
+                    <span class="age-label" data-age="1">2</span>
+                    <span class="age-label" data-age="2">3</span>
+                    <span class="age-label" data-age="3">4+</span>
+                </div>
+
+                <!-- Slider Track -->
+                <div class="age-slider-track" id="ageSliderTrack">
+                    <div class="age-slider-fill" id="ageSliderFill"></div>
+                    <div class="age-slider-markers">
+                        <div class="age-marker" data-age="0"></div>
+                        <div class="age-marker" data-age="1"></div>
+                        <div class="age-marker" data-age="2"></div>
+                        <div class="age-marker" data-age="3"></div>
+                    </div>
+                    <div class="age-slider-thumb" id="ageSliderThumb"></div>
+                </div>
+
+                <!-- Content Cards -->
+                <div class="age-content-wrapper">
+                    <div class="age-content active" data-age="0">
+                        <div class="age-card">
+                            <div class="age-card-badge" style="background: var(--mint);">1—1.5 года</div>
+                            <h3>Наблюдаем и показываем</h3>
+                            <p>Показываем движения, демонстрируем процесс сборки. Ребёнок пока только наблюдает и запоминает.</p>
+                            <div class="age-card-tips">
+                                <span>Демонстрация</span>
+                                <span>Наблюдение</span>
+                                <span>Запоминание</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="age-content" data-age="1">
+                        <div class="age-card">
+                            <div class="age-card-badge" style="background: var(--yellow);">2 года</div>
+                            <h3>Первые успехи</h3>
+                            <p>Может собирать пазлы из 15 деталей с опорой на форму. Начинает понимать принцип сцепления.</p>
+                            <div class="age-card-tips">
+                                <span>15 деталей</span>
+                                <span>По форме</span>
+                                <span>Со сцеплением</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="age-content" data-age="2">
+                        <div class="age-card">
+                            <div class="age-card-badge" style="background: var(--coral);">2.5—3 года</div>
+                            <h3>Самостоятельность</h3>
+                            <p>Собирает новые пазлы самостоятельно, ориентируется по картинке. Уверенно справляется с задачами.</p>
+                            <div class="age-card-tips">
+                                <span>Новые пазлы</span>
+                                <span>По картинке</span>
+                                <span>Без помощи</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="age-content" data-age="3">
+                        <div class="age-card">
+                            <div class="age-card-badge" style="background: var(--purple);">4—5 лет</div>
+                            <h3>Никогда не поздно!</h3>
+                            <p>Если ещё не умеет — не страшно! Начните с половинок и пройдите все этапы. Результат будет!</p>
+                            <div class="age-card-tips">
+                                <span>С половинок</span>
+                                <span>Постепенно</span>
+                                <span>Обязательно получится</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Смотреть полное видео</h2>
+            <p>37 минут подробных объяснений с демонстрацией</p>
+            <a href="https://youtu.be/Zd_K7cHUIVU" target="_blank" class="cta-button">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                </svg>
+                Смотреть на YouTube
+            </a>
+        </div>
+    </section>
+
+    <!-- Firework Container -->
+    <div class="firework-container" id="fireworkContainer"></div>
+
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-message">
+            <div class="success-emoji">🎉</div>
+            <div class="success-text">Поздравляем!</div>
+            <div class="success-subtext">Все этапы обучения пройдены</div>
+            <button class="success-close" onclick="closeSuccess()">Отлично!</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>По материалам видео <a href="https://youtu.be/Zd_K7cHUIVU" target="_blank">Валентины Паевской</a> • 2016</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentStage = 1;
+
+        function goToStage(stage) {
+            if (stage < 1 || stage > 4) return;
+
+            // Update navigation buttons
+            document.querySelectorAll('.stage-nav-btn').forEach((btn, index) => {
+                btn.classList.remove('active');
+                if (index + 1 === stage) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Mark completed stages
+            document.querySelectorAll('.stage-nav-item').forEach((item, index) => {
+                if (index + 1 < stage) {
+                    item.classList.add('completed');
+                } else {
+                    item.classList.remove('completed');
+                }
+            });
+
+            // Update content
+            document.querySelectorAll('.stage-content').forEach(content => {
+                content.classList.remove('active');
+                if (parseInt(content.dataset.stage) === stage) {
+                    content.classList.add('active');
+                }
+            });
+
+            currentStage = stage;
+
+            // Smooth scroll to stages section
+            document.querySelector('.stages').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+
+        // Click on navigation circles
+        document.querySelectorAll('.stage-nav-btn').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                goToStage(index + 1);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentStage < 4) {
+                goToStage(currentStage + 1);
+            } else if (e.key === 'ArrowLeft' && currentStage > 1) {
+                goToStage(currentStage - 1);
+            }
+        });
+
+        // Puzzle Firework Effect
+        const puzzleColors = [
+            { start: '#FF6B6B', end: '#FFE66D' },
+            { start: '#4ECDC4', end: '#00BBF9' },
+            { start: '#9B5DE5', end: '#F15BB5' },
+            { start: '#00BBF9', end: '#4ECDC4' },
+            { start: '#FFE66D', end: '#FF6B6B' }
+        ];
+
+        function createPuzzleSVG(colorIndex) {
+            const colors = puzzleColors[colorIndex % puzzleColors.length];
+            const gradId = `fireworkGrad${Math.random().toString(36).substr(2, 9)}`;
+            return `
+                <svg viewBox="0 0 100 100">
+                    <defs>
+                        <linearGradient id="${gradId}" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:${colors.start}"/>
+                            <stop offset="100%" style="stop-color:${colors.end}"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M20 5 L50 5 C50 5 45 15 50 20 C55 25 65 20 65 20 L80 20 L80 50 C80 50 90 45 95 50 C100 55 95 65 95 65 L95 80 L65 80 C65 80 70 90 65 95 C60 100 50 95 50 95 L20 95 L20 65 C20 65 10 70 5 65 C0 60 5 50 5 50 L5 20 L35 20 C35 20 30 10 35 5 C40 0 50 5 50 5" fill="url(#${gradId})"/>
+                </svg>
+            `;
+        }
+
+        function triggerPuzzleFirework(event) {
+            const button = event.currentTarget;
+            const rect = button.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const container = document.getElementById('fireworkContainer');
+            
+            // Create puzzle pieces
+            const numPuzzles = 15;
+            for (let i = 0; i < numPuzzles; i++) {
+                const puzzle = document.createElement('div');
+                puzzle.className = 'puzzle-firework';
+                puzzle.innerHTML = createPuzzleSVG(i);
+                
+                // Random direction
+                const angle = (i / numPuzzles) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
+                const distance = 150 + Math.random() * 200;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance - 100;
+                const rotation = (Math.random() - 0.5) * 360;
+                
+                puzzle.style.left = centerX - 20 + 'px';
+                puzzle.style.top = centerY - 20 + 'px';
+                puzzle.style.setProperty('--tx', tx + 'px');
+                puzzle.style.setProperty('--ty', ty + 'px');
+                puzzle.style.setProperty('--rot', rotation + 'deg');
+                puzzle.style.animationDelay = (i * 0.05) + 's';
+                
+                container.appendChild(puzzle);
+            }
+
+            // Create confetti
+            const confettiColors = ['#FF6B6B', '#FFE66D', '#4ECDC4', '#9B5DE5', '#00BBF9', '#F15BB5'];
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.background = confettiColors[i % confettiColors.length];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                confetti.style.width = (5 + Math.random() * 10) + 'px';
+                confetti.style.height = (5 + Math.random() * 10) + 'px';
+                
+                const tx = (Math.random() - 0.5) * 400;
+                const ty = -100 - Math.random() * 200;
+                
+                confetti.style.left = centerX + 'px';
+                confetti.style.top = centerY + 'px';
+                confetti.style.setProperty('--tx', tx + 'px');
+                confetti.style.setProperty('--ty', ty + 'px');
+                confetti.style.animationDelay = (Math.random() * 0.3) + 's';
+                
+                container.appendChild(confetti);
+            }
+
+            // Show success overlay after a short delay
+            setTimeout(() => {
+                document.getElementById('successOverlay').classList.add('active');
+            }, 600);
+
+            // Clean up particles after animation
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 2500);
+        }
+
+        function closeSuccess() {
+            document.getElementById('successOverlay').classList.remove('active');
+        }
+
+        // Close overlay with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSuccess();
+            }
+        });
+
+        // ========== AGE SLIDER ==========
+        let currentAge = 0;
+        const ageColors = ['var(--mint)', 'var(--yellow)', 'var(--coral)', 'var(--purple)'];
+        const ageColorsEnd = ['var(--yellow)', 'var(--coral)', 'var(--purple)', 'var(--mint)'];
+
+        function setAge(age) {
+            if (age < 0 || age > 3) return;
+            currentAge = age;
+
+            // Update labels
+            document.querySelectorAll('.age-label').forEach((label, idx) => {
+                label.classList.toggle('active', idx === age);
+            });
+
+            // Update markers
+            document.querySelectorAll('.age-marker').forEach((marker, idx) => {
+                marker.classList.toggle('active', idx === age);
+            });
+
+            // Update thumb position and style
+            const thumb = document.getElementById('ageSliderThumb');
+            const positions = [10, 36.66, 63.33, 90]; // percentage positions
+            thumb.style.left = `${positions[age]}%`;
+            thumb.style.setProperty('--thumb-color', ageColors[age]);
+            thumb.style.setProperty('--thumb-color-end', ageColorsEnd[age]);
+
+            // Update fill
+            const fill = document.getElementById('ageSliderFill');
+            fill.style.width = `${positions[age]}%`;
+
+            // Update content
+            document.querySelectorAll('.age-content').forEach(content => {
+                const contentAge = parseInt(content.dataset.age);
+                content.classList.toggle('active', contentAge === age);
+            });
+        }
+
+        // Click on labels
+        document.querySelectorAll('.age-label').forEach(label => {
+            label.addEventListener('click', () => {
+                setAge(parseInt(label.dataset.age));
+            });
+        });
+
+        // Click on markers
+        document.querySelectorAll('.age-marker').forEach(marker => {
+            marker.addEventListener('click', () => {
+                setAge(parseInt(marker.dataset.age));
+            });
+        });
+
+        // Click on track
+        document.getElementById('ageSliderTrack').addEventListener('click', (e) => {
+            const track = e.currentTarget;
+            const rect = track.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const percent = x / rect.width;
+            
+            // Find closest age
+            let closest = 0;
+            const positions = [0.1, 0.366, 0.633, 0.9];
+            let minDist = Math.abs(percent - positions[0]);
+            
+            for (let i = 1; i < positions.length; i++) {
+                const dist = Math.abs(percent - positions[i]);
+                if (dist < minDist) {
+                    minDist = dist;
+                    closest = i;
+                }
+            }
+            
+            setAge(closest);
+        });
+
+        // Drag functionality
+        const thumb = document.getElementById('ageSliderThumb');
+        let isDragging = false;
+
+        thumb.addEventListener('mousedown', startDrag);
+        thumb.addEventListener('touchstart', startDrag, { passive: true });
+
+        function startDrag(e) {
+            isDragging = true;
+            thumb.classList.add('dragging');
+            e.preventDefault?.();
+        }
+
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('touchmove', drag, { passive: false });
+
+        function drag(e) {
+            if (!isDragging) return;
+            e.preventDefault?.();
+            
+            const track = document.getElementById('ageSliderTrack');
+            const rect = track.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const x = clientX - rect.left;
+            const percent = Math.max(0, Math.min(1, x / rect.width));
+            
+            // Find closest age while dragging
+            const positions = [0.1, 0.366, 0.633, 0.9];
+            let closest = 0;
+            let minDist = Math.abs(percent - positions[0]);
+            
+            for (let i = 1; i < positions.length; i++) {
+                const dist = Math.abs(percent - positions[i]);
+                if (dist < minDist) {
+                    minDist = dist;
+                    closest = i;
+                }
+            }
+            
+            // Snap to position
+            if (closest !== currentAge) {
+                setAge(closest);
+            }
+        }
+
+        document.addEventListener('mouseup', endDrag);
+        document.addEventListener('touchend', endDrag);
+
+        function endDrag() {
+            if (isDragging) {
+                isDragging = false;
+                thumb.classList.remove('dragging');
+            }
+        }
+
+        // Initialize slider
+        setAge(0);
+    </script>
+
+</body>
+</html>
