@@ -1175,6 +1175,7 @@
             opacity: 1;
             transform: translateY(0) scale(1);
             pointer-events: auto;
+            position: relative;
         }
 
         .age-card {
@@ -1239,6 +1240,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            margin-top: 0;
         }
 
         .cta::before {
@@ -1436,11 +1438,16 @@
 
             /* Разделение блоков «Возрастные ориентиры» и «про видео» на телефоне */
             .ages {
-                padding-bottom: 120px;
+                padding-bottom: 48px;
+            }
+
+            .age-content-wrapper {
+                min-height: 320px;
             }
 
             .cta {
                 padding: 80px 0 60px;
+                margin-top: 48px;
             }
         }
     </style>
