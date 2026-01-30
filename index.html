@@ -1436,13 +1436,28 @@
                 font-size: 1.85rem;
             }
 
-            /* Разделение блоков «Возрастные ориентиры» и «про видео» на телефоне */
+            /* Разделение блоков «Возрастные ориентиры» и «про видео» на телефоне:
+               карточки возраста — в потоке документа, чтобы секция .ages имела
+               реальную высоту и блок CTA не наезжал сверху */
             .ages {
                 padding-bottom: 48px;
             }
 
             .age-content-wrapper {
-                min-height: 320px;
+                min-height: 0;
+                position: static;
+            }
+
+            .age-content {
+                position: static;
+                display: none;
+                opacity: 1;
+                transform: none;
+            }
+
+            .age-content.active {
+                display: block;
+                position: relative;
             }
 
             .cta {
